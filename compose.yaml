@@ -9,7 +9,8 @@ services:
       GENERIC_TIMEZONE: "${GENERIC_TIMEZONE:-Europe/Amsterdam}"
       TZ: "${TZ:-Europe/Amsterdam}"
       N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
-      N8N_RUNNERS_ENABLED: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files

@@ -38,6 +38,8 @@ The setup stores n8n data in the Docker volume `n8n_data`, so workflows and cred
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
 
+Telemetry diagnostics and version-check notifications are disabled in the included Compose configuration.
+
 ## Common Commands
 
 Start or recreate the stack:
