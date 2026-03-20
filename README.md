@@ -7,6 +7,7 @@ This repository contains a simple Docker Compose setup for running `n8n` locally
 - `compose.yaml`: runs `n8n` with persistent storage
 - `.env.example`: optional environment values you can customize
 - `local-files/`: host folder mounted into the container at `/files`
+- `workflows/`: tracked host folder mounted into the container at `/workflows`
 
 ## First Run
 
@@ -38,6 +39,8 @@ The setup stores n8n data in the Docker volume `n8n_data`, so workflows and cred
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
 
+The tracked folder `workflows/` is mounted into the container at `/workflows`. Use it for exported workflow JSON files that you want to commit to Git.
+
 Telemetry diagnostics and version-check notifications are disabled in the included Compose configuration.
 
 ## Common Commands
@@ -52,6 +55,13 @@ View logs:
 
 ```powershell
 docker compose logs -f
+```
+
+Export all workflows as separate JSON files into the tracked `workflows/` folder:
+
+```powershell
+& "$Env:ProgramFiles\Docker\Docker\resources\bin\docker.exe" exec -u node n8n `
+  n8n export:workflow --all --separate --pretty --output=/workflows
 ```
 
 Stop the stack:
