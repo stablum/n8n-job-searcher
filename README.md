@@ -43,7 +43,7 @@ If you create a `.env` file, you can change:
 
 The setup stores n8n data in the Docker volume `n8n_data`, so workflows and credentials survive container restarts.
 
-Postgres stores the NocoDB `NC_DB` database in the Docker volume `postgres_data`. This is where NocoDB stores its metadata and the data for new projects created in local-storage mode.
+Postgres stores its data in the host directory `postgres-data/`. This is where the NocoDB `NC_DB` database is persisted, including NocoDB metadata and the data for new projects created in local-storage mode.
 
 The Postgres defaults are intentionally generic so you can also connect to the same Postgres instance from `n8n` later without the credentials looking NocoDB-specific.
 
@@ -93,6 +93,8 @@ Stop and remove the container without deleting the Docker volume:
 ```powershell
 docker compose down
 ```
+
+Postgres data remains in `postgres-data/` even after `docker compose down`.
 
 Update to the newest n8n image:
 

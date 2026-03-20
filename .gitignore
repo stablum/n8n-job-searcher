@@ -1,3 +1,4 @@
 .env
 local-files/*
 !local-files/.gitkeep
+postgres-data/
