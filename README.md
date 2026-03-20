@@ -1,57 +1,78 @@
 # n8n Docker Setup
 
-These notes assume `WSL 2` and `Docker Desktop` are already installed on Windows 11.
+This repository contains a simple Docker Compose setup for running `n8n` locally on Windows 11 after installing `WSL 2` and `Docker Desktop`.
 
-## Start n8n
+## Included Files
+
+- `compose.yaml`: runs `n8n` with persistent storage
+- `.env.example`: optional environment values you can customize
+- `local-files/`: host folder mounted into the container at `/files`
+
+## First Run
 
 1. Start Docker Desktop and wait until it shows as running.
-2. Open PowerShell.
-3. Create a persistent Docker volume:
+2. Open PowerShell in this project directory.
+3. Optionally copy the example environment file:
 
 ```powershell
-docker volume create n8n_data
+Copy-Item .env.example .env
 ```
 
 4. Start n8n:
 
 ```powershell
-docker run -d `
-  --name n8n `
-  -p 5678:5678 `
-  -e GENERIC_TIMEZONE="Europe/Amsterdam" `
-  -e TZ="Europe/Amsterdam" `
-  -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true `
-  -e N8N_RUNNERS_ENABLED=true `
-  -v n8n_data:/home/node/.n8n `
-  docker.n8n.io/n8nio/n8n
+docker compose up -d
 ```
 
 5. Open [http://localhost:5678](http://localhost:5678).
 
-## Basic Docker Commands
+## Configuration
 
-Stop n8n:
+If you create a `.env` file, you can change:
+
+- `GENERIC_TIMEZONE`: timezone used by scheduling nodes
+- `TZ`: container system timezone
+- `N8N_PORT`: host port exposed by Docker
+
+The setup stores n8n data in the Docker volume `n8n_data`, so workflows and credentials survive container restarts.
+
+The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
+
+## Common Commands
+
+Start or recreate the stack:
 
 ```powershell
-docker stop n8n
-```
-
-Start it again:
-
-```powershell
-docker start n8n
+docker compose up -d
 ```
 
 View logs:
 
 ```powershell
-docker logs -f n8n
+docker compose logs -f
 ```
 
-Remove the container without deleting workflow data:
+Stop the stack:
 
 ```powershell
-docker rm -f n8n
+docker compose stop
 ```
 
-The `n8n_data` volume keeps your data between container restarts or container re-creation.
+Start it again:
+
+```powershell
+docker compose start
+```
+
+Stop and remove the container without deleting the Docker volume:
+
+```powershell
+docker compose down
+```
+
+Update to the newest n8n image:
+
+```powershell
+docker compose pull
+docker compose up -d
+```
