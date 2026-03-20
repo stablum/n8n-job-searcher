@@ -88,3 +88,7 @@ Update to the newest n8n image:
 docker compose pull
 docker compose up -d
 ```
+
+## License
+
+This repository is licensed under the GNU Affero General Public License v3.0. See `LICENSE`.
