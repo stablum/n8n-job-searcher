@@ -15,13 +15,37 @@ services:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
       - ./workflows:/workflows
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-nocodb}"
+      POSTGRES_USER: "${POSTGRES_USER:-nocodb}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-nocodb}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-nocodb} -d ${POSTGRES_DB:-nocodb}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   nocodb:
     image: nocodb/nocodb:latest
     container_name: nocodb
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "${NOCODB_PORT:-8080}:8080"
     environment:
+      NC_DB: "pg://postgres:5432?u=${POSTGRES_USER:-nocodb}&p=${POSTGRES_PASSWORD:-nocodb}&d=${POSTGRES_DB:-nocodb}"
+      NC_AUTH_JWT_SECRET: "${NC_AUTH_JWT_SECRET:-change-me-for-anything-beyond-local-dev}"
       NC_DISABLE_TELE: "true"
       PORT: "8080"
     volumes:
@@ -29,4 +53,5 @@ services:
 
 volumes:
   n8n_data:
+  postgres_data:
   nocodb_data:

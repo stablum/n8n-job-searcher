@@ -36,10 +36,16 @@ If you create a `.env` file, you can change:
 - `TZ`: container system timezone
 - `N8N_PORT`: host port exposed by Docker
 - `NOCODB_PORT`: host port exposed by Docker for NocoDB
+- `POSTGRES_DB`: Postgres database name used by NocoDB
+- `POSTGRES_USER`: Postgres username used by NocoDB
+- `POSTGRES_PASSWORD`: Postgres password used by NocoDB
+- `NC_AUTH_JWT_SECRET`: NocoDB auth and secret-encryption key
 
 The setup stores n8n data in the Docker volume `n8n_data`, so workflows and credentials survive container restarts.
 
-NocoDB stores its metadata and SQLite database in the Docker volume `nocodb_data`, so its tables and configuration also survive container restarts.
+Postgres stores the NocoDB `NC_DB` database in the Docker volume `postgres_data`. This is where NocoDB stores its metadata and the data for new projects created in local-storage mode.
+
+The Docker volume `nocodb_data` is still mounted for NocoDB app files under `/usr/app/data`.
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
 
