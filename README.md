@@ -50,6 +50,8 @@ Postgres stores its data in the host directory `postgres-data/`. This is where t
 
 The Postgres defaults are intentionally generic so you can also connect to the same Postgres instance from `n8n` later without the credentials looking NocoDB-specific.
 
+Postgres is also exposed on the Windows host at `127.0.0.1:5432`, so local tools can connect with the same database name, username, and password.
+
 The NocoDB app directory is stored in the host directory `nocodb-data/` and mounted into the container at `/usr/app/data`.
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
