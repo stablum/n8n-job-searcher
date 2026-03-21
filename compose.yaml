@@ -8,11 +8,11 @@ services:
     environment:
       GENERIC_TIMEZONE: "${GENERIC_TIMEZONE:-Europe/Amsterdam}"
       TZ: "${TZ:-Europe/Amsterdam}"
-      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "false"
       N8N_DIAGNOSTICS_ENABLED: "false"
       N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
     volumes:
-      - n8n_data:/home/node/.n8n
+      - ./n8n-data:/home/node/.n8n
       - ./local-files:/files
       - ./workflows:/workflows
   postgres:
@@ -49,8 +49,4 @@ services:
       NC_DISABLE_TELE: "true"
       PORT: "8080"
     volumes:
-      - nocodb_data:/usr/app/data
-
-volumes:
-  n8n_data:
-  nocodb_data:
+      - ./nocodb-data:/usr/app/data

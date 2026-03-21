@@ -4,10 +4,13 @@ This repository contains a simple Docker Compose setup for running `n8n` and `No
 
 ## Included Files
 
-- `compose.yaml`: runs `n8n` and `NocoDB` with persistent storage
+- `compose.yaml`: runs `n8n`, `Postgres`, and `NocoDB` with persistent storage
 - `.env.example`: optional environment values you can customize
 - `local-files/`: host folder mounted into the container at `/files`
 - `workflows/`: tracked host folder mounted into the container at `/workflows`
+- `n8n-data/`: host folder for n8n state and SQLite data
+- `postgres-data/`: host folder for Postgres database files
+- `nocodb-data/`: host folder for NocoDB app files
 
 ## First Run
 
@@ -41,19 +44,21 @@ If you create a `.env` file, you can change:
 - `POSTGRES_PASSWORD`: generic Postgres password used by NocoDB and reusable from other services
 - `NC_AUTH_JWT_SECRET`: NocoDB auth and secret-encryption key
 
-The setup stores n8n data in the Docker volume `n8n_data`, so workflows and credentials survive container restarts.
+The setup stores n8n data in the host directory `n8n-data/`, so workflows, credentials, and the n8n encryption key survive container restarts.
 
 Postgres stores its data in the host directory `postgres-data/`. This is where the NocoDB `NC_DB` database is persisted, including NocoDB metadata and the data for new projects created in local-storage mode.
 
 The Postgres defaults are intentionally generic so you can also connect to the same Postgres instance from `n8n` later without the credentials looking NocoDB-specific.
 
-The Docker volume `nocodb_data` is still mounted for NocoDB app files under `/usr/app/data`.
+The NocoDB app directory is stored in the host directory `nocodb-data/` and mounted into the container at `/usr/app/data`.
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
 
 The tracked folder `workflows/` is mounted into the container at `/workflows`. Use it for exported workflow JSON files that you want to commit to Git.
 
 Telemetry diagnostics and version-check notifications are disabled for `n8n`, and anonymous telemetry is disabled for `NocoDB`.
+
+Because `n8n-data/` is a Windows host bind mount, `N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS` is disabled in this setup.
 
 ## Common Commands
 
@@ -88,13 +93,13 @@ Start it again:
 docker compose start
 ```
 
-Stop and remove the container without deleting the Docker volume:
+Stop and remove the containers without deleting the host data directories:
 
 ```powershell
 docker compose down
 ```
 
-Postgres data remains in `postgres-data/` even after `docker compose down`.
+All service data remains in `n8n-data/`, `postgres-data/`, and `nocodb-data/` even after `docker compose down`.
 
 Update to the newest n8n image:
 

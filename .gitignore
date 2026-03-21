@@ -1,4 +1,9 @@
 .env
 local-files/*
 !local-files/.gitkeep
-postgres-data/
+n8n-data/*
+!n8n-data/.gitkeep
+postgres-data/*
+!postgres-data/.gitkeep
+nocodb-data/*
+!nocodb-data/.gitkeep
