@@ -9,6 +9,7 @@ This repository contains a simple Docker Compose setup for running `n8n`, `Postg
 - `local-files/`: host folder mounted into the container at `/files`
 - `local-files/reports/`: host folder where generated Markdown and PDF reports are written
 - `workflows/`: tracked host folder mounted into the container at `/workflows`
+- `schema/job_search.sql`: expected `job_search` table definition for the report workflow
 - `n8n-data/`: host folder for n8n state and SQLite data
 - `postgres-data/`: host folder for Postgres database files
 - `nocodb-data/`: host folder for NocoDB app files
@@ -39,6 +40,7 @@ If you create a `.env` file, you can change:
 - `GENERIC_TIMEZONE`: timezone used by scheduling nodes
 - `TZ`: container system timezone
 - `N8N_PORT`: host port exposed by Docker
+- `N8N_RESTRICT_FILE_ACCESS_TO`: semicolon-separated allowlist for n8n file read/write nodes
 - `NOCODB_PORT`: host port exposed by Docker for NocoDB
 - `POSTGRES_DB`: generic Postgres database name used by NocoDB and reusable from other services
 - `POSTGRES_USER`: generic Postgres username used by NocoDB and reusable from other services
@@ -57,7 +59,11 @@ The NocoDB app directory is stored in the host directory `nocodb-data/` and moun
 
 The local folder `local-files/` is mounted into the container at `/files`. This is useful for nodes that read or write files on disk.
 
+The Compose setup also allowlists `/files` for n8n file nodes via `N8N_RESTRICT_FILE_ACCESS_TO`, otherwise the `Read/Write Files from Disk` node refuses to write there even though Docker has mounted the directory.
+
 The tracked folder `workflows/` is mounted into the container at `/workflows`. Use it for exported workflow JSON files that you want to commit to Git.
+
+The `job-search-nice-1` workflow expects `public.job_search` to use `text` for `company`, `role`, and `link`. A ready-to-run definition and upgrade script is included in `schema/job_search.sql`.
 
 Telemetry diagnostics and version-check notifications are disabled for `n8n`, and anonymous telemetry is disabled for `NocoDB`.
 
@@ -107,6 +113,11 @@ docker compose down
 All service data remains in `n8n-data/`, `postgres-data/`, and `nocodb-data/` even after `docker compose down`.
 
 Generated job-search reports are written to `local-files/reports/` on the host and appear inside the `n8n` container at `/files/reports/`.
+
+The workflow writes those reports to fixed paths:
+
+- `local-files/reports/job-search-report.md`
+- `local-files/reports/job-search-report.pdf`
 
 Update to the newest n8n image:
 

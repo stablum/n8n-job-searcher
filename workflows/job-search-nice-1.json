@@ -1,636 +1,646 @@
-[
-  {
-    "updatedAt": "2026-03-22T16:07:57.804Z",
-    "createdAt": "2026-03-22T16:07:57.804Z",
-    "id": "ACSMOHU7EEJQGsdk",
-    "name": "job-search-nice-1",
-    "description": null,
-    "active": false,
-    "isArchived": false,
-    "nodes": [
-      {
-        "parameters": {
-          "schema": {
-            "__rl": true,
-            "mode": "list",
-            "value": "public"
+{
+  "updatedAt": "2026-03-23T03:23:21.752Z",
+  "createdAt": "2026-03-22T16:07:57.804Z",
+  "id": "ACSMOHU7EEJQGsdk",
+  "name": "job-search-nice-1",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "job_search",
+          "mode": "list",
+          "cachedResultName": "job_search"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "ID": 0
           },
-          "table": {
-            "__rl": true,
-            "value": "job_search",
-            "mode": "list",
-            "cachedResultName": "job_search"
-          },
-          "columns": {
-            "mappingMode": "autoMapInputData",
-            "value": {
-              "ID": 0
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
             },
-            "matchingColumns": [],
-            "schema": [
-              {
-                "id": "ID",
-                "displayName": "ID",
-                "required": true,
-                "defaultMatch": false,
-                "display": true,
-                "type": "number",
-                "canBeUsedToMatch": true
-              },
-              {
-                "id": "company",
-                "displayName": "company",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true
-              },
-              {
-                "id": "role",
-                "displayName": "role",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true
-              },
-              {
-                "id": "found_at",
-                "displayName": "found_at",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "dateTime",
-                "canBeUsedToMatch": true
-              },
-              {
-                "id": "link",
-                "displayName": "link",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true
-              },
-              {
-                "id": "full_description",
-                "displayName": "full_description",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true
-              }
-            ],
-            "attemptToConvertTypes": false,
-            "convertFieldsToString": false
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.postgres",
-        "typeVersion": 2.6,
-        "position": [
-          960,
-          -16
-        ],
-        "id": "e36ae0c9-64e9-4ebc-b6f8-2f16f825155f",
-        "name": "Insert rows in a table",
-        "credentials": {
-          "postgres": {
-            "id": "jSRjhjacVTQ7yijy",
-            "name": "Postgres account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "mode": "raw",
-          "jsonOutput": "={{ $json.output }}",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          800,
-          -16
-        ],
-        "id": "11383574-8d11-4da6-b872-843f10bd2357",
-        "name": "Edit Fields"
-      },
-      {
-        "parameters": {
-          "operation": "select",
-          "schema": {
-            "__rl": true,
-            "mode": "list",
-            "value": "public"
-          },
-          "table": {
-            "__rl": true,
-            "value": "job_search",
-            "mode": "list",
-            "cachedResultName": "job_search"
-          },
-          "returnAll": true,
-          "options": {}
-        },
-        "type": "n8n-nodes-base.postgres",
-        "typeVersion": 2.6,
-        "position": [
-          -336,
-          -16
-        ],
-        "id": "0f99bb81-7b6e-4bfe-90eb-9d88b35dc534",
-        "name": "Select rows from a table",
-        "credentials": {
-          "postgres": {
-            "id": "jSRjhjacVTQ7yijy",
-            "name": "Postgres account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "9df1e92e-166b-4ff1-b5c7-46e5a0288776",
-                "name": "company",
-                "value": "={{ $json.company }}",
-                "type": "string"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          -144,
-          -16
-        ],
-        "id": "5b73a9e1-b193-4ccb-93e3-54a313471d83",
-        "name": "Edit Fields1"
-      },
-      {
-        "parameters": {
-          "fieldsToAggregate": {
-            "fieldToAggregate": [
-              {
-                "fieldToAggregate": "company",
-                "renameField": true,
-                "outputFieldName": "companies"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.aggregate",
-        "typeVersion": 1,
-        "position": [
-          64,
-          -16
-        ],
-        "id": "64214bac-91ad-40dd-94e9-ce5d9620189e",
-        "name": "Aggregate"
-      },
-      {
-        "parameters": {
-          "modelId": {
-            "__rl": true,
-            "value": "gpt-5.4",
-            "mode": "list",
-            "cachedResultName": "GPT-5.4"
-          },
-          "responses": {
-            "values": [
-              {
-                "content": "=Please search a job in Amsterdam as Machine Learning Engineer, but exclude the following companies: {{ $json.companies }}.\n\nSet found_at to ISO 8601.\n"
-              }
-            ]
-          },
-          "builtInTools": {
-            "webSearch": {
-              "searchContextSize": "medium"
-            }
-          },
-          "options": {
-            "textFormat": {
-              "textOptions": {
-                "type": "json_schema",
-                "name": "job_search",
-                "schema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"company\": { \"type\": \"string\" },\n    \"role\": { \"type\": \"string\" },\n    \"found_at\": { \"type\": \"string\" },\n    \"link\": { \"type\": \"string\" },\n    \"full_description\": { \"type\": \"string\" }\n  },\n  \"required\": [\n    \"company\",\n    \"role\",\n    \"found_at\",\n    \"link\",\n    \"full_description\"\n  ],\n  \"additionalProperties\": false\n}\n"
-              }
-            }
-          }
-        },
-        "type": "@n8n/n8n-nodes-langchain.openAi",
-        "typeVersion": 2.1,
-        "position": [
-          240,
-          -16
-        ],
-        "id": "738beca3-e5da-4416-99b8-8e87c9392440",
-        "name": "Message a model",
-        "credentials": {
-          "openAiApi": {
-            "id": "OhwN4UedbaUwzgSb",
-            "name": "OpenAi account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "5234c24a-7c0f-4192-a054-602dec558f16",
-                "name": "output",
-                "value": "={{ $json.output[0].content[0].text }}",
-                "type": "object"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          592,
-          -16
-        ],
-        "id": "ece07968-727b-476f-9a60-47f1e94b2486",
-        "name": "Edit Fields2"
-      },
-      {
-        "parameters": {
-          "rule": {
-            "interval": [
-              {
-                "field": "hours"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.scheduleTrigger",
-        "typeVersion": 1.3,
-        "position": [
-          -544,
-          -16
-        ],
-        "id": "57a75339-c4ea-4cd8-a078-8b85d7d9a705",
-        "name": "Schedule Trigger"
-      },
-      {
-        "parameters": {
-          "operation": "select",
-          "schema": {
-            "__rl": true,
-            "mode": "list",
-            "value": "public"
-          },
-          "table": {
-            "__rl": true,
-            "value": "job_search",
-            "mode": "list",
-            "cachedResultName": "job_search"
-          },
-          "returnAll": true,
-          "options": {}
-        },
-        "type": "n8n-nodes-base.postgres",
-        "typeVersion": 2.6,
-        "position": [
-          1184,
-          -16
-        ],
-        "id": "52709ed1-3537-4e27-9620-7986bc49fd5d",
-        "name": "Select rows for report",
-        "credentials": {
-          "postgres": {
-            "id": "jSRjhjacVTQ7yijy",
-            "name": "Postgres account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "mode": "runOnceForAllItems",
-          "language": "javaScript",
-          "jsCode": "const jobs = [...items.map((item) => item.json)].sort((left, right) => {\n  const leftTime = left.found_at ? new Date(left.found_at).getTime() : 0;\n  const rightTime = right.found_at ? new Date(right.found_at).getTime() : 0;\n  return rightTime - leftTime;\n});\n\nconst generatedAt = new Date().toISOString();\nconst escapeHtml = (value) => String(value ?? '')\n  .replace(/&/g, '&amp;')\n  .replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;')\n  .replace(/\"/g, '&quot;')\n  .replace(/'/g, '&#39;');\nconst normalize = (value, fallback = 'Unknown') => {\n  if (value === null || value === undefined || value === '') return fallback;\n  return String(value);\n};\n\nconst markdownSections = jobs.map((job, index) => {\n  const title = `${index + 1}. ${normalize(job.role)} at ${normalize(job.company)}`;\n  return [\n    `## ${title}`,\n    '',\n    `- Found at: ${normalize(job.found_at)}`,\n    `- Link: ${normalize(job.link)}`,\n    '',\n    'Full description:',\n    normalize(job.full_description, 'No description available.'),\n  ].join('\\n');\n}).join('\\n\\n---\\n\\n');\n\nconst markdownReport = [\n  '# Job Search Report',\n  '',\n  `Generated at: ${generatedAt}`,\n  `Total jobs: ${jobs.length}`,\n  '',\n  markdownSections || '_No jobs available._',\n].join('\\n');\n\nconst htmlSections = jobs.map((job, index) => `\n  <section class=\"job-entry\">\n    <h2>${index + 1}. ${escapeHtml(normalize(job.role))} at ${escapeHtml(normalize(job.company))}</h2>\n    <p class=\"meta\"><strong>Found at:</strong> ${escapeHtml(normalize(job.found_at))}</p>\n    <p class=\"meta\"><strong>Link:</strong> <a href=\"${escapeHtml(normalize(job.link))}\">${escapeHtml(normalize(job.link))}</a></p>\n    <div class=\"description\">${escapeHtml(normalize(job.full_description, 'No description available.')).replace(/\\n/g, '<br>')}</div>\n  </section>\n`).join('\\n');\n\nconst htmlReport = `<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Job Search Report</title>\n    <style>\n      body {\n        font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n        color: #1f2937;\n        margin: 40px;\n        line-height: 1.6;\n      }\n      h1 {\n        margin-bottom: 8px;\n        font-size: 30px;\n      }\n      .summary {\n        color: #4b5563;\n        margin-bottom: 28px;\n      }\n      .job-entry {\n        margin-bottom: 32px;\n        padding-bottom: 24px;\n        border-bottom: 1px solid #d1d5db;\n        page-break-inside: avoid;\n      }\n      .job-entry:last-child {\n        border-bottom: none;\n      }\n      h2 {\n        margin-bottom: 10px;\n        font-size: 22px;\n      }\n      .meta {\n        margin: 4px 0;\n      }\n      .description {\n        margin-top: 14px;\n        white-space: normal;\n      }\n      a {\n        color: #0f766e;\n        text-decoration: none;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Job Search Report</h1>\n    <p class=\"summary\">Generated at ${escapeHtml(generatedAt)}<br>Total jobs: ${jobs.length}</p>\n    ${htmlSections || '<p>No jobs available.</p>'}\n  </body>\n</html>`;\n\nreturn [{\n  json: {\n    generated_at: generatedAt,\n    job_count: jobs.length,\n    markdown_path: '/files/reports/job-search-report.md',\n    pdf_path: '/files/reports/job-search-report.pdf',\n    report_markdown: markdownReport,\n    report_html: htmlReport,\n  },\n}];"
-        },
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          1408,
-          -16
-        ],
-        "id": "f0d0f25f-0c31-4144-bb84-1d34566ca4cb",
-        "name": "Build report document"
-      },
-      {
-        "parameters": {
-          "operation": "toText",
-          "sourceProperty": "report_markdown",
-          "binaryPropertyName": "markdownFile",
-          "options": {
-            "fileName": "job-search-report.md",
-            "encoding": "utf8"
-          }
-        },
-        "type": "n8n-nodes-base.convertToFile",
-        "typeVersion": 1.1,
-        "position": [
-          1632,
-          -128
-        ],
-        "id": "b75cc228-49ad-4509-a3d0-1bc0d52da35a",
-        "name": "Markdown report to file"
-      },
-      {
-        "parameters": {
-          "operation": "write",
-          "fileName": "={{ $json.markdown_path }}",
-          "dataPropertyName": "markdownFile",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.readWriteFile",
-        "typeVersion": 1.1,
-        "position": [
-          1856,
-          -128
-        ],
-        "id": "6df53a8e-42be-417f-8ab4-11b52ce0d0f5",
-        "name": "Save markdown report"
-      },
-      {
-        "parameters": {
-          "operation": "toText",
-          "sourceProperty": "report_html",
-          "binaryPropertyName": "htmlFile",
-          "options": {
-            "fileName": "index.html",
-            "encoding": "utf8"
-          }
-        },
-        "type": "n8n-nodes-base.convertToFile",
-        "typeVersion": 1.1,
-        "position": [
-          1632,
-          96
-        ],
-        "id": "49ae7d0f-31ba-45d8-8f57-d9200273a678",
-        "name": "HTML report to file"
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://gotenberg:3000/forms/chromium/convert/html",
-          "authentication": "none",
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "parameterType": "formBinaryData",
-                "name": "files",
-                "inputDataFieldName": "htmlFile"
-              }
-            ]
-          },
-          "options": {
-            "response": {
-              "response": {
-                "responseFormat": "file",
-                "outputPropertyName": "pdfFile"
-              }
-            }
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.4,
-        "position": [
-          1856,
-          96
-        ],
-        "id": "5752ff09-998a-4fdc-b213-b33cc6610f2d",
-        "name": "Convert report to PDF"
-      },
-      {
-        "parameters": {
-          "operation": "write",
-          "fileName": "={{ $json.pdf_path }}",
-          "dataPropertyName": "pdfFile",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.readWriteFile",
-        "typeVersion": 1.1,
-        "position": [
-          2080,
-          96
-        ],
-        "id": "66d5572c-2d7d-45fe-b3f0-a438fcb5c880",
-        "name": "Save PDF report"
-      }
-    ],
-    "connections": {
-      "Edit Fields": {
-        "main": [
-          [
             {
-              "node": "Insert rows in a table",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Select rows from a table": {
-        "main": [
-          [
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
             {
-              "node": "Edit Fields1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Edit Fields1": {
-        "main": [
-          [
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
             {
-              "node": "Aggregate",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Aggregate": {
-        "main": [
-          [
+              "id": "found_at",
+              "displayName": "found_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
             {
-              "node": "Message a model",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Message a model": {
-        "main": [
-          [
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
             {
-              "node": "Edit Fields2",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Edit Fields2": {
-        "main": [
-          [
-            {
-              "node": "Edit Fields",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Schedule Trigger": {
-        "main": [
-          [
-            {
-              "node": "Select rows from a table",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Insert rows in a table": {
-        "main": [
-          [
-            {
-              "node": "Select rows for report",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Select rows for report": {
-        "main": [
-          [
-            {
-              "node": "Build report document",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Build report document": {
-        "main": [
-          [
-            {
-              "node": "Markdown report to file",
-              "type": "main",
-              "index": 0
+              "id": "full_description",
+              "displayName": "full_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
-          [
-            {
-              "node": "HTML report to file",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
-      "Markdown report to file": {
-        "main": [
-          [
-            {
-              "node": "Save markdown report",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "HTML report to file": {
-        "main": [
-          [
-            {
-              "node": "Convert report to PDF",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Convert report to PDF": {
-        "main": [
-          [
-            {
-              "node": "Save PDF report",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Save markdown report": {
-        "main": [
-          []
-        ]
-      },
-      "Save PDF report": {
-        "main": [
-          []
-        ]
-      }
-    },
-    "settings": {
-      "executionOrder": "v1",
-      "binaryMode": "separate",
-      "availableInMCP": false
-    },
-    "staticData": null,
-    "meta": null,
-    "pinData": null,
-    "versionId": "d8408205-60e3-4f24-9fd5-e1a11c056a28",
-    "activeVersionId": null,
-    "versionCounter": 2,
-    "triggerCount": 0,
-    "tags": [],
-    "shared": [
-      {
-        "updatedAt": "2026-03-22T16:07:57.808Z",
-        "createdAt": "2026-03-22T16:07:57.808Z",
-        "role": "workflow:owner",
-        "workflowId": "ACSMOHU7EEJQGsdk",
-        "projectId": "DgVdkDeDQhFhziM6",
-        "project": {
-          "updatedAt": "2026-03-20T05:01:50.640Z",
-          "createdAt": "2026-03-20T04:55:19.064Z",
-          "id": "DgVdkDeDQhFhziM6",
-          "name": "Foo Bar <foobar@example.org>",
-          "type": "personal",
-          "icon": null,
-          "description": null,
-          "creatorId": "13afb86f-a8fe-44b8-a7e4-7ce49e0c5357"
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        960,
+        -16
+      ],
+      "id": "e36ae0c9-64e9-4ebc-b6f8-2f16f825155f",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "jSRjhjacVTQ7yijy",
+          "name": "Postgres account"
         }
       }
-    ],
-    "versionMetadata": {
-      "name": null,
-      "description": null
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        -16
+      ],
+      "id": "11383574-8d11-4da6-b872-843f10bd2357",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "job_search",
+          "mode": "list",
+          "cachedResultName": "job_search"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -336,
+        -16
+      ],
+      "id": "0f99bb81-7b6e-4bfe-90eb-9d88b35dc534",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "jSRjhjacVTQ7yijy",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9df1e92e-166b-4ff1-b5c7-46e5a0288776",
+              "name": "company",
+              "value": "={{ $json.company }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "5b73a9e1-b193-4ccb-93e3-54a313471d83",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "company",
+              "renameField": true,
+              "outputFieldName": "companies"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "64214bac-91ad-40dd-94e9-ce5d9620189e",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Please search a job in Amsterdam as Machine Learning Engineer, but exclude the following companies: {{ $json.companies }}.\n\nSet found_at to ISO 8601.\n"
+            }
+          ]
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "medium"
+          }
+        },
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_schema",
+              "name": "job_search",
+              "schema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"company\": { \"type\": \"string\" },\n    \"role\": { \"type\": \"string\" },\n    \"found_at\": { \"type\": \"string\" },\n    \"link\": { \"type\": \"string\" },\n    \"full_description\": { \"type\": \"string\" }\n  },\n  \"required\": [\n    \"company\",\n    \"role\",\n    \"found_at\",\n    \"link\",\n    \"full_description\"\n  ],\n  \"additionalProperties\": false\n}\n"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -16
+      ],
+      "id": "738beca3-e5da-4416-99b8-8e87c9392440",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "OhwN4UedbaUwzgSb",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5234c24a-7c0f-4192-a054-602dec558f16",
+              "name": "output",
+              "value": "={{ $json.output[0].content[0].text }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -16
+      ],
+      "id": "ece07968-727b-476f-9a60-47f1e94b2486",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -544,
+        -16
+      ],
+      "id": "57a75339-c4ea-4cd8-a078-8b85d7d9a705",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "job_search",
+          "mode": "list",
+          "cachedResultName": "job_search"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1184,
+        -16
+      ],
+      "id": "52709ed1-3537-4e27-9620-7986bc49fd5d",
+      "name": "Select rows for report",
+      "credentials": {
+        "postgres": {
+          "id": "jSRjhjacVTQ7yijy",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const jobs = [...items.map((item) => item.json)].sort((left, right) => {\n  const leftTime = left.found_at ? new Date(left.found_at).getTime() : 0;\n  const rightTime = right.found_at ? new Date(right.found_at).getTime() : 0;\n  return rightTime - leftTime;\n});\n\nconst generatedAt = new Date().toISOString();\nconst escapeHtml = (value) => String(value ?? '')\n  .replace(/&/g, '&amp;')\n  .replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;')\n  .replace(/\"/g, '&quot;')\n  .replace(/'/g, '&#39;');\nconst normalize = (value, fallback = 'Unknown') => {\n  if (value === null || value === undefined || value === '') return fallback;\n  return String(value);\n};\n\nconst markdownSections = jobs.map((job, index) => {\n  const title = `${index + 1}. ${normalize(job.role)} at ${normalize(job.company)}`;\n  return [\n    `## ${title}`,\n    '',\n    `- Found at: ${normalize(job.found_at)}`,\n    `- Link: ${normalize(job.link)}`,\n    '',\n    'Full description:',\n    normalize(job.full_description, 'No description available.'),\n  ].join('\\n');\n}).join('\\n\\n---\\n\\n');\n\nconst markdownReport = [\n  '# Job Search Report',\n  '',\n  `Generated at: ${generatedAt}`,\n  `Total jobs: ${jobs.length}`,\n  '',\n  markdownSections || '_No jobs available._',\n].join('\\n');\n\nconst htmlSections = jobs.map((job, index) => `\n  <section class=\"job-entry\">\n    <h2>${index + 1}. ${escapeHtml(normalize(job.role))} at ${escapeHtml(normalize(job.company))}</h2>\n    <p class=\"meta\"><strong>Found at:</strong> ${escapeHtml(normalize(job.found_at))}</p>\n    <p class=\"meta\"><strong>Link:</strong> <a href=\"${escapeHtml(normalize(job.link))}\">${escapeHtml(normalize(job.link))}</a></p>\n    <div class=\"description\">${escapeHtml(normalize(job.full_description, 'No description available.')).replace(/\\n/g, '<br>')}</div>\n  </section>\n`).join('\\n');\n\nconst htmlReport = `<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Job Search Report</title>\n    <style>\n      body {\n        font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n        color: #1f2937;\n        margin: 40px;\n        line-height: 1.6;\n      }\n      h1 {\n        margin-bottom: 8px;\n        font-size: 30px;\n      }\n      .summary {\n        color: #4b5563;\n        margin-bottom: 28px;\n      }\n      .job-entry {\n        margin-bottom: 32px;\n        padding-bottom: 24px;\n        border-bottom: 1px solid #d1d5db;\n        page-break-inside: avoid;\n      }\n      .job-entry:last-child {\n        border-bottom: none;\n      }\n      h2 {\n        margin-bottom: 10px;\n        font-size: 22px;\n      }\n      .meta {\n        margin: 4px 0;\n      }\n      .description {\n        margin-top: 14px;\n        white-space: normal;\n      }\n      a {\n        color: #0f766e;\n        text-decoration: none;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Job Search Report</h1>\n    <p class=\"summary\">Generated at ${escapeHtml(generatedAt)}<br>Total jobs: ${jobs.length}</p>\n    ${htmlSections || '<p>No jobs available.</p>'}\n  </body>\n</html>`;\n\nreturn [{\n  json: {\n    generated_at: generatedAt,\n    job_count: jobs.length,\n    markdown_path: '/files/reports/job-search-report.md',\n    pdf_path: '/files/reports/job-search-report.pdf',\n    report_markdown: markdownReport,\n    report_html: htmlReport,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1408,
+        -16
+      ],
+      "id": "f0d0f25f-0c31-4144-bb84-1d34566ca4cb",
+      "name": "Build report document"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "report_markdown",
+        "binaryPropertyName": "markdownFile",
+        "options": {
+          "fileName": "job-search-report.md",
+          "encoding": "utf8"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1632,
+        -128
+      ],
+      "id": "b75cc228-49ad-4509-a3d0-1bc0d52da35a",
+      "name": "Markdown report to file"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/reports/job-search-report.md",
+        "dataPropertyName": "markdownFile",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        1856,
+        -128
+      ],
+      "id": "6df53a8e-42be-417f-8ab4-11b52ce0d0f5",
+      "name": "Save markdown report"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "report_html",
+        "binaryPropertyName": "htmlFile",
+        "options": {
+          "fileName": "index.html",
+          "encoding": "utf8"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1632,
+        96
+      ],
+      "id": "49ae7d0f-31ba-45d8-8f57-d9200273a678",
+      "name": "HTML report to file"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://gotenberg:3000/forms/chromium/convert/html",
+        "authentication": "none",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "files",
+              "inputDataFieldName": "htmlFile"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "pdfFile"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1856,
+        96
+      ],
+      "id": "5752ff09-998a-4fdc-b213-b33cc6610f2d",
+      "name": "Convert report to PDF"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/reports/job-search-report.pdf",
+        "dataPropertyName": "pdfFile",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2080,
+        96
+      ],
+      "id": "66d5572c-2d7d-45fe-b3f0-a438fcb5c880",
+      "name": "Save PDF report"
     }
-  }
-]
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Select rows for report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows for report": {
+      "main": [
+        [
+          {
+            "node": "Build report document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build report document": {
+      "main": [
+        [
+          {
+            "node": "Markdown report to file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTML report to file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown report to file": {
+      "main": [
+        [
+          {
+            "node": "Save markdown report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML report to file": {
+      "main": [
+        [
+          {
+            "node": "Convert report to PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert report to PDF": {
+      "main": [
+        [
+          {
+            "node": "Save PDF report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save markdown report": {
+      "main": [
+        []
+      ]
+    },
+    "Save PDF report": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "2e989dc1-0806-4119-8ee1-c9c1e02ec40c",
+  "activeVersionId": null,
+  "versionCounter": 5,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-03-22T16:07:57.808Z",
+      "createdAt": "2026-03-22T16:07:57.808Z",
+      "role": "workflow:owner",
+      "workflowId": "ACSMOHU7EEJQGsdk",
+      "projectId": "DgVdkDeDQhFhziM6",
+      "project": {
+        "updatedAt": "2026-03-20T05:01:50.64Z",
+        "createdAt": "2026-03-20T04:55:19.064Z",
+        "id": "DgVdkDeDQhFhziM6",
+        "name": "Foo Bar <foobar@example.org>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "13afb86f-a8fe-44b8-a7e4-7ce49e0c5357"
+      }
+    }
+  ],
+  "tags": [],
+  "parentFolder": null,
+  "activeVersion": null,
+  "scopes": [
+    "workflow:create",
+    "workflow:delete",
+    "workflow:execute",
+    "workflow:execute-chat",
+    "workflow:list",
+    "workflow:move",
+    "workflow:publish",
+    "workflow:read",
+    "workflow:share",
+    "workflow:unpublish",
+    "workflow:unshare",
+    "workflow:update",
+    "workflow:updateRedactionSetting"
+  ],
+  "checksum": "4a3a2bff19d057a8e4964a67aaf575afd79172599c57fcd9cfa81050537cae47"
+}
