@@ -1,12 +1,13 @@
 # n8n + NocoDB Docker Setup
 
-This repository contains a simple Docker Compose setup for running `n8n` and `NocoDB` locally on Windows 11 after installing `WSL 2` and `Docker Desktop`.
+This repository contains a simple Docker Compose setup for running `n8n`, `Postgres`, `NocoDB`, and `Gotenberg` locally on Windows 11 after installing `WSL 2` and `Docker Desktop`.
 
 ## Included Files
 
-- `compose.yaml`: runs `n8n`, `Postgres`, and `NocoDB` with persistent storage
+- `compose.yaml`: runs `n8n`, `Postgres`, `NocoDB`, and `Gotenberg`
 - `.env.example`: optional environment values you can customize
 - `local-files/`: host folder mounted into the container at `/files`
+- `local-files/reports/`: host folder where generated Markdown and PDF reports are written
 - `workflows/`: tracked host folder mounted into the container at `/workflows`
 - `n8n-data/`: host folder for n8n state and SQLite data
 - `postgres-data/`: host folder for Postgres database files
@@ -62,6 +63,8 @@ Telemetry diagnostics and version-check notifications are disabled for `n8n`, an
 
 Because `n8n-data/` is a Windows host bind mount, `N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS` is disabled in this setup.
 
+`Gotenberg` runs as an internal PDF conversion service on the Docker network at `http://gotenberg:3000`. The `job-search-nice-1` workflow uses it to turn an HTML report into a PDF without relying on any external web service.
+
 ## Common Commands
 
 Start or recreate the stack:
@@ -102,6 +105,8 @@ docker compose down
 ```
 
 All service data remains in `n8n-data/`, `postgres-data/`, and `nocodb-data/` even after `docker compose down`.
+
+Generated job-search reports are written to `local-files/reports/` on the host and appear inside the `n8n` container at `/files/reports/`.
 
 Update to the newest n8n image:
 

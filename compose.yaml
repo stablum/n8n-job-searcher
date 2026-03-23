@@ -52,3 +52,7 @@ services:
       PORT: "8080"
     volumes:
       - ./nocodb-data:/usr/app/data
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    container_name: gotenberg
+    restart: unless-stopped
